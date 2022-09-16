@@ -31,3 +31,16 @@
     padding: 5px;
     font-size: 30px;
 }
+
+/**/
+.cadastrar-clientes{
+    cursor: pointer;
+}
+.atualizar-clientes{
+    display: none;
+    cursor: pointer;
+}
+
+#form_atualizar_cliente{
+    display: none;
+}
