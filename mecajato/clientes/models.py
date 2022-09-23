@@ -11,7 +11,7 @@ class Cliente(models.Model):
 
 class Carro(models.Model):
     carro = models.CharField(max_length=50)
-    placa = models.CharField(max_length=8) # TODO uma maneira de UNIQUE True
+    placa = models.CharField(max_length=7,unique=True) # TODO uma maneira de UNIQUE True
     ano = models.IntegerField()
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     lavagens = models.IntegerField(default=0)
