@@ -42,14 +42,39 @@ function dados_cliente(){
         doc.style.display = "block";
 
         nome = document.getElementById("nome_upd");
-        nome.value = data["nome"];
+        nome.value = data['cliente']["nome"];
         sobrenome = document.getElementById("sobrenome_upd");
-        sobrenome.value = data["sobrenome"];
+        sobrenome.value = data['cliente']["sobrenome"];
         email = document.getElementById("email_upd");
-        email.value = data["email"];
+        email.value = data['cliente']["email"];
         cpf = document.getElementById("cpf_upd");
-        cpf.value = data["cpf"];
+        cpf.value = data['cliente']["cpf"];
 
-        console.log(data, data['nome'])
+        console.log(data, data['cliente']['nome'])
+        div_carros = document.getElementById('carros')
+        div_carros.innerHTML="";
+        for(i=0; i<data['carros'].length; i++){
+            console.log(data['carros'][i])
+            div_carros.innerHTML += "\<form action='/clientes/atualiza_carro/" + data['carros'][i]['id'] +"' method='POST'>\
+                <div class='row'>\
+                        <div class='col-md'>\
+                            <input class='form-control' name='carro' type='text' value='" + data['carros'][i]['fields']['carro'] + "'>\
+                        </div>\
+                        <div class='col-md'>\
+                            <input class='form-control' name='placa' type='text' value='" + data['carros'][i]['fields']['placa'] + "'>\
+                        </div>\
+                        <div class='col-md'>\
+                            <input class='form-control' type='text' name='ano' value='" + data['carros'][i]['fields']['ano'] + "' >\
+                        </div>\
+                        <div class='col-md'>\
+                            <input class='btn btn-lg btn-success' type='submit' value='SALVAR'>\
+                        </div>\
+                    </form>\
+                    <div class='col-md'>\
+                        <a href='/clientes/excluir_carro/"+ data['carros'][i]['id'] +"' class='btn btn-lg btn-danger'>EXCLUIR</a>\
+                    </div>\
+                </div><br>"
+        }        
+
     });
 }
