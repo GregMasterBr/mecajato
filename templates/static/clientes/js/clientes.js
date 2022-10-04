@@ -40,7 +40,8 @@ function dados_cliente(){
     }).then(function(data){
         doc = document.getElementById("form_atualizar_cliente");
         doc.style.display = "block";
-
+        id = document.getElementById('id')
+        id.value = data['cliente_id']        
         nome = document.getElementById("nome_upd");
         nome.value = data['cliente']["nome"];
         sobrenome = document.getElementById("sobrenome_upd");
@@ -77,4 +78,43 @@ function dados_cliente(){
         }        
 
     });
+}
+
+
+function update_cliente(){
+    nome = document.getElementById('nome_upd').value
+    sobrenome = document.getElementById('sobrenome_upd').value
+    email = document.getElementById('email_upd').value
+    cpf = document.getElementById('cpf_upd').value
+    id = document.getElementById('id').value
+    //crsf_token = document.getElementsByName("csrfmiddlewaretoken");
+
+    fetch('/clientes/update_cliente/' + id, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken':crsf_token[0].value,
+        },
+        body: JSON.stringify({
+            nome: nome,
+            sobrenome: sobrenome,
+            email: email,
+            cpf: cpf,
+        })
+
+    }).then(function(result){
+        return result.json()
+    }).then(function(data){
+
+        if(data['status'] == '200'){
+            nome = data['nome']
+            sobrenome = data['sobrenome']
+            email = data['email']
+            cpf = data['cpf']
+            console.log('Dados alterado com sucesso')
+        }else{
+            console.log('Ocorreu algum erro')
+        }
+
+    })
+
 }
