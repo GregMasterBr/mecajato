@@ -1,7 +1,7 @@
 from email.policy import default
 from secrets import token_hex
 from django.db import models
-from clientes.models import Cliente
+from mecajato.clientes.models import Cliente
 from .choices import ChoicesCategoriaManutencao
 from datetime import datetime
 
