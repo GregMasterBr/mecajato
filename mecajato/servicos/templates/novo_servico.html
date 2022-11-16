@@ -9,6 +9,7 @@
     <br>
     <br>
     <div class="container">
+        <h1>Novo Serviço</h1> 
         <form action="{% url 'novo_servico' %}" method="POST">{% csrf_token %}
             {{form.as_p}}
 
