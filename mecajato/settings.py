@@ -25,7 +25,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mecajato.clientes'
+    'mecajato.clientes',
+    'mecajato.servicos'
 ]
 
 MIDDLEWARE = [
