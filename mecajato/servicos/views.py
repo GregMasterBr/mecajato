@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 #from .models import Cliente, Carro
 from .forms import FormServico
+from .models import Servico
 
 def novo_servico(request):
     if request.method == "GET":
@@ -16,3 +17,13 @@ def novo_servico(request):
             return HttpResponse('Salvo com sucesso')
         else:
             return render(request, 'novo_servico.html', {'form': form})
+        
+def listar_servico(request):
+    if request.method == "GET":
+        servicos = Servico.objects.all()
+        return render(request, 'listar_servico.html', {'servicos': servicos})
+    
+
+def servico(request, identificador):
+    servico = get_object_or_404(Servico, identificador=identificador)
+    return render(request, 'servico.html', {'servico': servico})

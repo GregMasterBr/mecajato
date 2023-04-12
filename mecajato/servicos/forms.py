@@ -10,6 +10,7 @@ class FormServico(ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control', 'placeholder': (field.replace("_"," ")).title})
+            self.fields[field].widget.attrs.update({'placeholder': field})
             #self.fields[field].widget.attrs.update({'placeholder': field})
 
         choices = list()

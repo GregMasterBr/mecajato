@@ -1,5 +1,5 @@
 from email.policy import default
-from secrets import token_hex
+from secrets import token_hex, token_urlsafe
 from django.db import models
 from mecajato.clientes.models import Cliente
 from .choices import ChoicesCategoriaManutencao
@@ -20,6 +20,7 @@ class Servico(models.Model):
     data_entrega = models.DateField('Data de Entrega',null=True)
     finalizado = models.BooleanField('Finalizado', default=False)
     protocolo = models.CharField('Protocolo', max_length=52, null=True, blank=True)
+    identificador = models.CharField(blank=True, max_length=24, null=True)   
 
     class Meta:
         verbose_name_plural = 'serviços'
@@ -31,6 +32,10 @@ class Servico(models.Model):
     def save(self, *args, **kwargs):
         if not self.protocolo:
             self.protocolo = datetime.now().strftime("%d/%m/%Y-%H:%M:%S-") + token_hex(16)
+        
+        if not self.identificador:
+            self.identificador = token_urlsafe(16)            
+        
         super(Servico, self).save(*args, **kwargs)
 
     def preco_total(self):
@@ -39,3 +44,4 @@ class Servico(models.Model):
             preco_total += float(categoria.preco)
 
         return preco_total
+    

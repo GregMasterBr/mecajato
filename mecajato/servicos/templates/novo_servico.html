@@ -11,7 +11,20 @@
     <div class="container">
         <h1>Novo Serviço</h1> 
         <form action="{% url 'novo_servico' %}" method="POST">{% csrf_token %}
-            {{form.as_p}}
+            {% comment %} {{form.as_p}} {% endcomment %}
+
+            {{form.non_field_errors}}
+
+            {% for field in form %}
+                <section class="error-message">
+                    {{field.errors}}
+                </section>
+                <section>
+                    {{field.label_tag}}
+
+                    {{field}}
+                </section>
+            {% endfor %}            
 
             <input type="submit" class="btn btn-success" value="Salvar">
         </form>
