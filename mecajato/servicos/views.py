@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse, FileResponse
 #from .models import Cliente, Carro
 from .forms import FormServico
-from .models import Servico
+from .models import Servico, ServicoAdicional
 from fpdf import FPDF
 from io import BytesIO
 
@@ -29,7 +29,9 @@ def listar_servico(request):
 
 def servico(request, identificador):
     servico = get_object_or_404(Servico, identificador=identificador)
-    return render(request, 'servico.html', {'servico': servico})
+    servico_add  = servico.servicos_adicionais.all()
+    print(servico_add)
+    return render(request, 'servico.html', {'servico': servico, 'servico_adicional': servico_add})
 
 
 def gerar_os(request, identificador):
@@ -73,3 +75,21 @@ def gerar_os(request, identificador):
     return HttpResponse('PDF GERADO')
 
 
+
+def servico_adicional(request):
+    identificador_servico = request.POST.get('identificador_servico')
+    titulo = request.POST.get('titulo')
+    descricao = request.POST.get('descricao')
+    preco = request.POST.get('preco')
+
+    servico_adicional = ServicoAdicional(titulo=titulo,
+                                        descricao=descricao,
+                                        preco=preco)
+    
+    servico_adicional.save()
+
+    servico = Servico.objects.get(identificador=identificador_servico)
+    servico.servicos_adicionais.add(servico_adicional)
+    servico.save()
+
+    return HttpResponse("Salvo")
